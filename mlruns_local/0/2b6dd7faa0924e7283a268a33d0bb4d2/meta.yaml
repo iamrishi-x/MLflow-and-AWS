@@ -1,4 +1,4 @@
-artifact_uri: file:///Users/user/Documents/Project/MLflow-and-Dagshub/mlruns/0/2b6dd7faa0924e7283a268a33d0bb4d2/artifacts
+artifact_uri: file:///Users/user/Documents/Project/MLflow-and-Dagshub/mlruns_local/0/2b6dd7faa0924e7283a268a33d0bb4d2/artifacts
 end_time: 1720631878957
 entry_point_name: ''
 experiment_id: '0'

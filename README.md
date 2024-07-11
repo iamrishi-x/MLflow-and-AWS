@@ -10,35 +10,47 @@ This is basic understanding for implementation of MLflow and Dagshub remote serv
 
 **Table of Contents**
 
-## For Dagshub:
-
-MLFLOW_TRACKING_URL=https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow/ \
-MLFLOW_TRACKING_USERNAME=iamrishi-x \
-MLFLOW_TRACKING_PASSWORD=6824692c47a369aa6f9eac5b10041d5c8edbcef \
-python script.py
-
-
+## For Dagshub Cred Configuration:
+### Method 1
 ```bash
 export MLFLOW_TRACKING_URL=https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow/
 export MLFLOW_TRACKING_USERNAME=iamrishi-x
-export MLFLOW_TRACKING_PASSWORD=6824692c47a369aa6f9eac5b10041d5c8edbcefo
+export MLFLOW_TRACKING_PASSWORD=27810455efc1b096f0e2ae6609d29ec0e1557aae
 ```
 ```python
 url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow"
+```
+---
+### Method 2
+#### 1. Initialize DagsHub Repository:
+```python
 import dagshub
 dagshub.init(repo_owner='iamrishi-x', repo_name='MLflow-and-Dagshub', mlflow=True)
+```
 
+#### 2. Log Parameters and Metrics with MLflow:
+
+```python
 import mlflow
 with mlflow.start_run():
-  mlflow.log_param('parameter name', 'value')
-  mlflow.log_metric('metric name', 1)
+    mlflow.log_param('parameter name', 'value')
+    mlflow.log_metric('metric name', 1)
 ```
-```shell
-#Use below cred for dogshub
-export DAGSHUB_USER=iamrishi-x
-export DAGSHUB_PASSWORD=Htek@#650
+#### 3. Environment Variables :
+```sh
+export DAGSHUB_USER='<your_username>'
+export DAGSHUB_PASSWORD='<your_password>'
 ```
+#### 4. Credentials File:
+Create a .netrc file in your home directory with the following content:
 
+```sh
+machine dagshub.com
+login <your_username>
+password <your_password>
+```
+#### 5. Run Your Script:
+Execute your Python script to start logging to DagsHub via MLflow.
 
 ## Issues faced
 ###### Issue 1 - urllib3>=2.0 does not work with system Python on macOS 
