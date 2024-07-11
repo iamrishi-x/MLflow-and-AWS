@@ -1,6 +1,14 @@
 # MLflow-and-Dagshub
 This is basic understanding for implementation of MLflow and Dagshub remote server operation for comparison metrics
 
+## URLs
+```shell
+Dogshub url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub"
+Github url="https://github.com/iamrishi-x/MLflow-and-Dagshub"
+Experemental Dogshub url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D"
+local url="http://localhost:5000/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D"
+```
+
 # ML Flow
 
 ![](https://img.shields.io/github/stars/pandao/editor.md.svg) 
