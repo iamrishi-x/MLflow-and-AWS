@@ -23,6 +23,23 @@ export MLFLOW_TRACKING_URL=https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlf
 export MLFLOW_TRACKING_USERNAME=iamrishi-x
 export MLFLOW_TRACKING_PASSWORD=6824692c47a369aa6f9eac5b10041d5c8edbcefo
 ```
+```python
+url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow"
+import dagshub
+dagshub.init(repo_owner='iamrishi-x', repo_name='MLflow-and-Dagshub', mlflow=True)
+
+import mlflow
+with mlflow.start_run():
+  mlflow.log_param('parameter name', 'value')
+  mlflow.log_metric('metric name', 1)
+```
+```shell
+#Use below cred for dogshub
+export DAGSHUB_USER=iamrishi-x
+export DAGSHUB_PASSWORD=Htek@#650
+```
+
+
 ## Issues faced
 ###### Issue 1 - urllib3>=2.0 does not work with system Python on macOS 
 Solution [Downgrade piplib3 version to < 2.0.0 ](https://stackoverflow.com/questions/76187256/importerror-urllib3-v2-0-only-supports-openssl-1-1-1-currently-the-ssl-modu "Heading link")
