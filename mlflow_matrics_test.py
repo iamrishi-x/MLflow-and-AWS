@@ -20,8 +20,8 @@ from mlflow.models import infer_signature
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
-import dagshub
-dagshub.init(repo_owner='iamrishi-x', repo_name='MLflow-and-Dagshub', mlflow=True)
+#import dagshub
+#dagshub.init(repo_owner='iamrishi-x', repo_name='MLflow-and-Dagshub', mlflow=True)
 
 import mlflow
 # with mlflow.start_run():
@@ -63,8 +63,8 @@ if __name__ == "__main__":
     l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
 
     with mlflow.start_run():
-        mlflow.log_param('parameter name', 'value')
-        mlflow.log_metric('metric name', 1)
+        #mlflow.log_param('parameter name', 'value')
+        #mlflow.log_metric('metric name', 1)
         lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=42)
         lr.fit(train_x, train_y)
 
@@ -82,6 +82,9 @@ if __name__ == "__main__":
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("r2", r2)
         mlflow.log_metric("mae", mae)
+
+        remote_server_uri = "http://ec2-43-204-234-14.ap-south-1.compute.amazonaws.com:5000/"
+        mlflow.set_tracking_uri(remote_server_uri)
 
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 

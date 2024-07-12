@@ -3,8 +3,8 @@ This is basic understanding for implementation of MLflow and AWS remote server o
 
 ## URLs
 ```shell
-Dogshub url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub"
 Github url="https://github.com/iamrishi-x/MLflow-and-Dagshub"
+AWS MLFLOW tracking url="http://ec2-43-204-234-14.ap-south-1.compute.amazonaws.com:5000/"
 Experemental Dogshub url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D"
 local url="http://localhost:5000/#/experiments/0?searchFilter=&orderByKey=attributes.start_time&orderByAsc=false&startTime=ALL&lifecycleFilter=Active&modelVersionFilter=All+Runs&datasetsFilter=W10%3D"
 ```
@@ -24,73 +24,74 @@ local url="http://localhost:5000/#/experiments/0?searchFilter=&orderByKey=attrib
 
 - [Documentation](https://mlflow.org/docs/latest/index.html)
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) 
-
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 ![](https://img.shields.io/github/tag/pandao/editor.md.svg) 
 ![](https://img.shields.io/github/release/pandao/editor.md.svg) 
 
-**Table of Contents**
-
-## *For Dagshub Cred Configuration:
-### Method 1
-```bash
-export MLFLOW_TRACKING_URL=https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow/
-export MLFLOW_TRACKING_USERNAME=iamrishi-x
-export MLFLOW_TRACKING_PASSWORD=27810455efc1b096f0e2ae6609d29ec0e1557aae
-```
-```python
-url="https://dagshub.com/iamrishi-x/MLflow-and-Dagshub.mlflow"
-```
----
-### Method 2
-#### 1. Initialize DagsHub Repository:
-```python
-import dagshub
-dagshub.init(repo_owner='iamrishi-x', repo_name='MLflow-and-Dagshub', mlflow=True)
-```
-
-#### 2. Log Parameters and Metrics with MLflow:
-
-```python
-import mlflow
-with mlflow.start_run():
-    #Add below lines in start run
-    mlflow.log_param('parameter name', 'value')
-    mlflow.log_metric('metric name', 1)
-```
-#### 3. Environment Variables :
-```sh
-export DAGSHUB_USER='<your_username>'
-export DAGSHUB_PASSWORD='<your_password>'
-```
-
-#### 4. Run Your Script:
-Execute your Python script to start logging to DagsHub via MLflow.
-
 ---
 
-### DVC cmd
-1. dvc init
-2. dvc repro
-3. dvc dag
+### MLflow on AWS Setup:
+1. Login to AWS console.
+2. Create IAM user with AdministratorAccess - [ mlflow-user ]
+3. Export the credentials in your AWS CLI by running "aws configure"
+4. Create a s3 bucket [ mlflow-buckettt ]
+5. Create EC2 machine (Ubuntu) & add Security groups 5000 port [ mlflow-aws-machine ]
 
-## About MLflow & DVC
-MLflow
- - Its Production Grade
- - Trace all of your expriements
- - Logging & taging your model
+```shell
+sudo apt update
+sudo apt install python3-pip
+sudo pip3 install pipenv
+sudo pip3 install virtualenv
+mkdir mlflow
+cd mlflow
+pipenv install mlflow 
+pipenv install awscli 
+pipenv install boto3 
+pipenv shell
 
-DVC
- - Its very lite weight for POC only
- - lite weight expriements tracker
- - It can perform Orchestration (Creating Pipelines)
+/-- above not worked for me it showed errors --/
+sudo apt update
+sudo apt install python3-pip
+mkdir mlflow
+cd mlflow
+sudo apt install python3-venv
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install mlflow
+pip3 install awscli
+pip3 install boto3
+pip3 install setuptools
+## Then set aws credentials
+aws configure
+
+#Finally 
+mlflow server -h 0.0.0.0 --default-artifact-root s3://mlflow-buckettt
+
+#open Public IPv4 DNS to the port 5000
+
+#set uri in your local terminal and in your code 
+export MLFLOW_TRACKING_URI="http://ec2-43-204-234-14.ap-south-1.compute.amazonaws.com:5000/"
+
+```
 ---
-
+## AWS exit
+1. Terminated EC2 instance 
+2. Deleted data from S3 bucket
+3. Delete IAM user 
+To avoid AWS charge
 
 ## Issues faced
-###### Issue 1 - urllib3>=2.0 does not work with system Python on macOS 
-Solution [Downgrade piplib3 version to < 2.0.0 ](https://stackoverflow.com/questions/76187256/importerror-urllib3-v2-0-only-supports-openssl-1-1-1-currently-the-ssl-modu "Heading link")
+###### Issue 1 - Error in AWS Ec2 instance
+Solution [creating venv in AWS ](https://askubuntu.com/questions/1465218/pip-error-on-ubuntu-externally-managed-environment-%C3%97-this-environment-is-extern "Heading link")
+```python
+*Create a virtual environment using venv or virtualenv
 
-###### Issue 2 - Connection in use: ('127.0.0.1', 5000)
-Solution Instead of https://127.0.0.1:5000/ url
-http://localhost:5000/ worked for me in macos 
+*Make sure venv is installed by running:
+sudo apt install python3-venv
+
+*To create a new virtual environment in a directory named .venv, run:
+python3 -m venv .venv
+
+*To activate this virtual environment (which modifies the PATH environment variable), run this:
+source .venv/bin/activate
+```
